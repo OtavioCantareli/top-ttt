@@ -11,11 +11,24 @@ class Player
     @@instances += 1
   end
 
-  def self.instances
+  def self.count
     @@instances
   end
 
   def who
     "Player #{@name} with marker #{@marker}"
   end
+end
+
+def greet
+  until Player.count == 2
+    puts "Player #{Player.count + 1}, enter your name:"
+    name = gets.chomp
+    if Player.count.zero?
+      player1 = Player.new(name, 'X')
+    else
+      player2 = Player.new(name, 'O')
+    end
+  end
+  p player1, player2
 end
