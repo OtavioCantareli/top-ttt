@@ -20,7 +20,7 @@ class Player
   end
 end
 
-def greet
+def player_names
   until Player.count == 2
     puts "Player #{Player.count + 1}, enter your name:"
     name = gets.chomp
@@ -30,5 +30,5 @@ def greet
       player2 = Player.new(name, 'O')
     end
   end
-  p player1, player2
+  [player1, player2]
 end
