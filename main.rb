@@ -5,9 +5,10 @@ class Player
 
   @@instances = 0
 
-  def initialize(name, marker)
+  def initialize(name, marker, id)
     @name = name
     @marker = marker
+    @id = id
     @@instances += 1
   end
 
@@ -20,18 +21,20 @@ class Player
   end
 end
 
-player1, player2 = def player_names
-                     until Player.count == 2
-                       puts "Player #{Player.count + 1}, enter your name:"
-                       name = gets.chomp
-                       if Player.count.zero?
-                         player1 = Player.new(name, 'X')
-                       else
-                         player2 = Player.new(name, 'O')
-                       end
-                     end
-                     [player1, player2]
-                   end
+def player_names
+  until Player.count == 2
+    puts "Player #{Player.count + 1}, enter your name:"
+    name = gets.chomp
+    if Player.count.zero?
+      player1 = Player.new(name, 'X', Player.count + 1)
+    else
+      player2 = Player.new(name, 'O', Player.count + 1)
+    end
+  end
+  [player1, player2]
+end
+
+player1, player2 = player_names
 
 board = Array.new(9)
 num = 1
@@ -44,8 +47,6 @@ def display_board(board)
   puts " #{board[3]} | #{board[4]} | #{board[5]} "
   puts " #{board[6]} | #{board[7]} | #{board[8]} "
 end
-
-display_board(board)
 
 # def pick_spot
 #   puts 'Choose one of available spots!'
