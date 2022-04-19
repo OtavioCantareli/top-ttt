@@ -20,18 +20,18 @@ class Player
   end
 end
 
-def player_names
-  until Player.count == 2
-    puts "Player #{Player.count + 1}, enter your name:"
-    name = gets.chomp
-    if Player.count.zero?
-      player1 = Player.new(name, 'X')
-    else
-      player2 = Player.new(name, 'O')
-    end
-  end
-  [player1, player2]
-end
+player1, player2 = def player_names
+                     until Player.count == 2
+                       puts "Player #{Player.count + 1}, enter your name:"
+                       name = gets.chomp
+                       if Player.count.zero?
+                         player1 = Player.new(name, 'X')
+                       else
+                         player2 = Player.new(name, 'O')
+                       end
+                     end
+                     [player1, player2]
+                   end
 
 board = Array.new(9)
 num = 1
@@ -46,3 +46,9 @@ def display_board(board)
 end
 
 display_board(board)
+
+# def pick_spot
+#   puts 'Choose one of available spots!'
+#   spot = gets.chomp.to_i
+#   board[spot - 1] = P
+# end
