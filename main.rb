@@ -35,11 +35,21 @@ def player_names
 end
 
 player1, player2 = player_names
+@players = [player1, player2]
 
-board = Array.new(9)
+@current_player_indice = 1
+def current_player
+  @players[@current_player_indice]
+end
+
+def next_player
+  @current_player_indice = (@current_player_indice + 1) % @players.size
+end
+
+@board = Array.new(9)
 num = 1
-board = board.each_index do |ind|
-  board[ind] = num
+@board = @board.each_index do |ind|
+  @board[ind] = num
   num += 1
 end
 def display_board(board)
@@ -48,8 +58,19 @@ def display_board(board)
   puts " #{board[6]} | #{board[7]} | #{board[8]} "
 end
 
-# def pick_spot
-#   puts 'Choose one of available spots!'
-#   spot = gets.chomp.to_i
-#   board[spot - 1] = P
-# end
+def pick_spot
+  puts "#{current_player.name}, choose one of available spots!"
+  spot = gets.chomp.to_i
+  @board[spot - 1] = current_player.marker
+  next_player
+end
+
+display_board(@board)
+pick_spot
+display_board(@board)
+pick_spot
+display_board(@board)
+pick_spot
+display_board(@board)
+pick_spot
+display_board(@board)
