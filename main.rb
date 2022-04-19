@@ -1,4 +1,4 @@
-WIN = [[1, 2, 3], [4, 5, 6], [7, 8, 9], [1, 4, 7], [2, 5, 8], [3, 6, 9], [1, 5, 9], [3, 5, 7]].freeze
+WIN = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6]].freeze
 
 class Player
   attr_reader :name, :marker
@@ -58,19 +58,31 @@ def display_board(board)
   puts " #{board[6]} | #{board[7]} | #{board[8]} "
 end
 
-def pick_spot
-  puts "#{current_player.name}, choose one of available spots!"
-  spot = gets.chomp.to_i
-  @board[spot - 1] = current_player.marker
-  next_player
+def validate_move?(spot)
+  spot.instance_of?(Integer)
 end
 
-display_board(@board)
-pick_spot
-display_board(@board)
-pick_spot
-display_board(@board)
-pick_spot
-display_board(@board)
-pick_spot
-display_board(@board)
+def end_game
+  puts "#{current_player.name} lost the game!"
+  display_board(@board)
+end
+
+def pick_spot
+  puts "#{current_player.name}, choose one of available spots!"
+  display_board(@board)
+  spot = gets.chomp.to_i - 1
+  if validate_move?(@board[spot])
+    @board[spot] = current_player.marker
+    next_player
+  else
+    puts 'Spot already taken! Choose another one!'
+    pick_spot
+  end
+  end_game unless winner?(@board)
+end
+
+def winner?(board)
+  WIN.any? { |line| (line - board) == [] }
+end
+
+pick_spot while winner?(@board)
