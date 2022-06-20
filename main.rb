@@ -42,8 +42,7 @@ def current_player
 end
 
 def next_player
-  @current_player_indice = 1 if @current_player_indice.zero?
-  @current_player_indice = 0 if @current_player_indice == 1
+  @current_player_indice = @current_player_indice.zero? ? 1 : 0
 end
 
 @board = Array.new(9)
@@ -69,7 +68,7 @@ def end_game
 end
 
 def pick_spot
-  next_player
+  # next_player
   puts "#{current_player.name}, choose one of available spots!"
   display_board(@board)
   spot = gets.chomp.to_i - 1
