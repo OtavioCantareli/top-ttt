@@ -75,7 +75,7 @@ def pick_spot
     @board[spot] = current_player.marker
     next_player
   else
-    puts 'Spot already taken! Choose another one!'
+    puts 'Invalid spot! Choose another one!'
     pick_spot
   end
   end_game unless winner?(@board)
