@@ -68,6 +68,7 @@ def end_game
 end
 
 def pick_spot
+  next_player
   puts "#{current_player.name}, choose one of available spots!"
   display_board(@board)
   spot = gets.chomp.to_i - 1
@@ -82,7 +83,17 @@ def pick_spot
 end
 
 def winner?(board)
-  WIN.any? { |line| (line - board) == [] }
+  WIN.each do |comb|
+    case board.values_at(*comb)
+    when %w[O O O]
+      puts 'Player 1 wins'
+      return true
+    when %w[X X X]
+      puts 'Player 2 wins'
+      return true
+    end
+  end
+  nil
 end
 
 pick_spot while winner?(@board)
