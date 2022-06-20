@@ -1,5 +1,4 @@
 WIN = [[0, 1, 2], [3, 4, 5], [6, 7, 8], [0, 3, 6], [1, 4, 7], [2, 5, 8], [0, 4, 8], [2, 4, 6]].freeze
-
 class Player
   attr_reader :name, :marker
 
@@ -37,13 +36,14 @@ end
 player1, player2 = player_names
 @players = [player1, player2]
 
-@current_player_indice = 1
+@current_player_indice = 0
 def current_player
   @players[@current_player_indice]
 end
 
 def next_player
-  @current_player_indice = (@current_player_indice + 1) % @players.size
+  @current_player_indice = 1 if @current_player_indice.zero?
+  @current_player_indice = 0 if @current_player_indice == 1
 end
 
 @board = Array.new(9)
@@ -63,7 +63,8 @@ def validate_move?(spot)
 end
 
 def end_game
-  puts "#{current_player.name} lost the game!"
+  puts 'Draw!' if draw?
+  puts winner?
   display_board(@board)
 end
 
@@ -79,7 +80,7 @@ def pick_spot
     puts 'Invalid spot! Choose another one!'
     pick_spot
   end
-  end_game unless winner?(@board)
+  end_game unless winner?(@board) || draw?(@board)
 end
 
 def winner?(board)
@@ -96,4 +97,9 @@ def winner?(board)
   nil
 end
 
-pick_spot while winner?(@board)
+def draw?(board)
+  board.each do |spot|
+    spot.eql?('O' || 'X')
+  end
+end
+pick_spot until winner?(@board)
